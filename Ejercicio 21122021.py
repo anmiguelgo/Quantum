@@ -2,7 +2,7 @@
 
 # Importamos Solver y EmbeddingComposite
 
-import dwavebinarycap
+import dwavebinarycsp
 from dwave.system.samplers import DWaveSampler
 from dwave.system.composites import EmbeddingComposite
 
@@ -23,15 +23,32 @@ sampler = EmbeddingComposite(DWaveSampler())
 # Definicion cuerpo principal
 
 def planifica(horario, ubicacion, duracion, asistencia):
-if horario:
-# en horario de oficina
-    return (ubicacion and asistencia)
-else:
-    # fuera de horario
-    return (not ubicacion and duracion)
+    if horario:
+    # en horario de oficina
+        return (ubicacion and asistencia)
+    else:
+        # fuera de horario
+        return (not ubicacion and duracion)
 
 csp = dwavebinarycsp.ConstraintSatisfactionProblem(dwavebinarycsp.BINARY)
-csp.add_constarint(planifica, ['horario', 'ubicacion', 'duracion', 'asistencia'])
+csp.add_constraint(planifica, ['horario', 'ubicacion', 'duracion', 'asistencia'])
 
 bqm = dwavebinarycsp.stitch(csp)
-print(bqm)
+print(bqm.linear)
+print(bqm.quadratic)
+
+response = sampler.sample(bqm, num_reads = 5000)
+min_energy = next(response.data(['energy']))[0]
+
+print(response)
+
+total = 0
+for sample, energy, occurences in response.data(['sample', 'energy', 'num_occurrences']):
+    total = total + occurences
+    # if energy == min_energy:
+    horario = 'Horario de Trabajo' if sample['horario'] else 'fuera de horario'
+    ubicacion = 'presencial' if sample['ubicacion'] else 'remota'
+    duracion = 'corta' if sample['duracion'] else 'larga'
+    asistencia = 'obligatoria' if sample['asistencia'] else 'opcional'
+    print("{}: {} sesion de tipo {}, de duracion {} con asistencia {}"
+        .format(occurences, horario, ubicacion, duracion, asistencia))
