@@ -6,7 +6,10 @@ import dwavebinarycsp
 from dwave.system.samplers import DWaveSampler
 from dwave.system.composites import EmbeddingComposite
 
+<<<<<<< HEAD
 # importamos la posibilidad de inspeccionar
+=======
+>>>>>>> a581d5b40b10f9d3acb3fb621d8bf28dbddb0891
 import dwave.inspector
 
 # Donde y con que maquina quiero ejecutar mi pgm, por ejemplo estos dos de mas abajo
@@ -45,9 +48,13 @@ min_energy = next(response.data(['energy']))[0]
 
 print(response)
 
+<<<<<<< HEAD
 # habilitamos el inspeccionador
 dwave.inspector.show(response)
 
+=======
+dwave.inspector.show(response)
+>>>>>>> a581d5b40b10f9d3acb3fb621d8bf28dbddb0891
 total = 0
 for sample, energy, occurences in response.data(['sample', 'energy', 'num_occurrences']):
     total = total + occurences
