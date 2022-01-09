@@ -11,7 +11,7 @@ s5 = nx.star_graph(5)
 # lo dibujo
 print(dnx.min_vertex_cover(s5, sampler))
 
-# Al ejecutarlo, como hemso pedid grafo en estrella, el del centro lo crea com [0], por lo que ese debería ser el resultado
+# Al ejecutarlo, como hemos pedido grafo en estrella, el del centro lo crea com [0], por lo que ese debería ser el resultado
 # Leap IDE /workspace/Quantum $ /usr/local/bin/python /workspace/Quantum/Pruebagrafo8.py (Esta es la cola de ejecución)
 # Resultado:
 # [0]
