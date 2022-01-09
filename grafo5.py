@@ -21,4 +21,4 @@ print(dnx.min_vertex_cover(s5, sampler))
 
 # si ahora lo quiero representar graficamente, le pido que lo represente con etiquetas y lo almacene en .png
 nx.draw(s5, with_labels = True)
-mpl.savefig("grafo.png")
+mpl.savefig("grafo5.png")
