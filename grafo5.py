@@ -5,6 +5,9 @@ import matplotlib.pyplot as mpl
 from dwave.system.samplers import DWaveSampler
 from dwave.system.composites import EmbeddingComposite
 
+# Importams el sampler cásico, para comarar el cuantico de este
+from dimod.reference.samplers import ExactSolver
+
 # Definimos los Samplers
 sampler = EmbeddingComposite(DWaveSampler())
 
@@ -22,3 +25,7 @@ print(dnx.min_vertex_cover(s5, sampler))
 # si ahora lo quiero representar graficamente, le pido que lo represente con etiquetas y lo almacene en .png
 nx.draw(s5, with_labels = True)
 mpl.savefig("grafo5.png")
+
+# repitiendo pero contra el sampler lásico
+sampler = ExactSolver()
+print(dnx.min_vertex_cover(s5, sampler))
