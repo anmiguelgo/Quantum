@@ -6,23 +6,20 @@ import dwavebinarycsp
 from dwave.system.samplers import DWaveSampler
 from dwave.system.composites import EmbeddingComposite
 
-<<<<<<< HEAD
 # importamos la posibilidad de inspeccionar
-=======
->>>>>>> a581d5b40b10f9d3acb3fb621d8bf28dbddb0891
 import dwave.inspector
 
-# Donde y con que maquina quiero ejecutar mi pgm, por ejemplo estos dos de mas abajo
+# Donde y con que maquina quiero ejecutar mi pgm,
 
 sampler = EmbeddingComposite(DWaveSampler())
 # sampler = EmbeddingComposite(DWaveSampler(solver='DW_2000_6'))
 # sampler = EmbeddingComposite(DWaveSampler(solver=dict(topology__type='pegasus')))
 
-# Definicion de variables
+# Definición de variables
 #####################################################################
 ## horario      --> 1: Trabajo      0: Fuera de trabajo
-## ubicacion    --> 1: Presencial   0: Remoto
-## duracion     --> 1: Corta        0: Larga
+## ubicación    --> 1: Presencial   0: Remoto
+## duración     --> 1: Corta        0: Larga
 ## asistencia   --> 1: Obligatoria  0: Opcional
 #####################################################################
 
@@ -34,7 +31,7 @@ def planifica(horario, ubicacion, duracion, asistencia):
         return (ubicacion and asistencia)
     else:
         # fuera de horario
-        return (not ubicacion and duracion)
+        return (not ubicacion and not duracion)
 
 csp = dwavebinarycsp.ConstraintSatisfactionProblem(dwavebinarycsp.BINARY)
 csp.add_constraint(planifica, ['horario', 'ubicacion', 'duracion', 'asistencia'])
@@ -48,13 +45,10 @@ min_energy = next(response.data(['energy']))[0]
 
 print(response)
 
-<<<<<<< HEAD
 # habilitamos el inspeccionador
 dwave.inspector.show(response)
 
-=======
 dwave.inspector.show(response)
->>>>>>> a581d5b40b10f9d3acb3fb621d8bf28dbddb0891
 total = 0
 for sample, energy, occurences in response.data(['sample', 'energy', 'num_occurrences']):
     total = total + occurences
